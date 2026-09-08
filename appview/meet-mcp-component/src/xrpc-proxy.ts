@@ -1,3 +1,31 @@
+// SVELTEKIT-BACKEND-PRESERVED: moved out of svelte/ during the cljs migration; not wired.
+//
+// Moved verbatim (only this header comment was added; the code below is
+// byte-for-byte from before the move) from
+// `svelte/src/routes/xrpc/[...path]/+server.ts`, the SvelteKit server-route
+// handler that this repo's wrangler.jsonc `main` pointed at before this
+// migration (via `svelte/.svelte-kit/cloudflare/_worker.js`, SvelteKit's
+// build output for this file). It proxied any `/xrpc/<nsid>` request to the
+// AgentGateway MCP router (`AGENTGATEWAY_MCP_ROUTER_URL`) as a JSON-RPC
+// `tools/call`.
+//
+// This migration repoints wrangler.jsonc's `main` at `src/app.ts` instead
+// (see that file and this repo's wrangler.jsonc header comment) because
+// `src/app.ts` — unlike this file before it — calls `env.ASSETS.fetch`, so
+// it can serve both the cljs static bundle and its own `/xrpc/` routes.
+// `src/app.ts` already has its own `/xrpc/com.etzhayyim.apps.meet.*` handler
+// that proxies to `DISPATCHER_URL`, which is a *different* mechanism than
+// this file's `/xrpc/[...path]` → MCP-router proxy: different upstream,
+// different envelope (JSON-RPC `tools/call` here vs. a plain JSON POST
+// there). This file's mechanism is not reachable through the deployed
+// Worker after this migration.
+//
+// It still imports from '@sveltejs/kit' and './$types' (SvelteKit's
+// codegen'd route types), neither of which resolves now that the SvelteKit
+// toolchain (`svelte/`) has been removed, so this file will NOT run as-is.
+// Whether to revive it — e.g. rewritten as a plain Worker fetch handler and
+// wired into `src/app.ts` — is an open product decision this migration does
+// not make.
 import { json, type RequestEvent } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
