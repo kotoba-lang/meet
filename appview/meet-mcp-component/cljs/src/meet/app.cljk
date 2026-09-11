@@ -69,7 +69,7 @@
    :app/routes []
    :app/vars []
    :app/xrpc? true
-   :app/relative-path "appview/meet-mcp-component/cljs/src/meet/app.cljs"})
+   :app/relative-path "appview/meet-mcp-component/cljs/src/meet/app.cljk"})
 
 (rf/reg-event-db
  :initialize-db

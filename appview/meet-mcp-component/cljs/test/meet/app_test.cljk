@@ -19,7 +19,7 @@
     (is (= [] @(rf/subscribe [:app/routes])))
     (is (= 0 (count @(rf/subscribe [:app/vars]))))
     (is (true? @(rf/subscribe [:app/xrpc?])))
-    (is (= "appview/meet-mcp-component/cljs/src/meet/app.cljs"
+    (is (= "appview/meet-mcp-component/cljs/src/meet/app.cljk"
            @(rf/subscribe [:app/relative-path])))))
 
 (deftest routes-sub-reflects-db
